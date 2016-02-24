@@ -1,0 +1,14 @@
+{
+  "consul": "consul:8500",
+  "services": [
+    {
+      "name": "app",
+      "port": 8080,
+      "health": "/usr/bin/curl --fail -s http://localhost:8080",
+      "poll": 10,
+      "ttl": 25,
+      "tags": ["app"]
+    }
+  ]
+}
+

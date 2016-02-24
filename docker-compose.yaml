@@ -1,0 +1,35 @@
+version: '2'
+services:
+  consul0:
+    build: ./consul
+    command: >
+      agent
+      -dev
+      -ui
+      -client 0.0.0.0
+    ports:
+      - "8500:8500"
+
+  consul1:
+    build: ./consul
+    links:
+      - consul0:consul
+    command: >
+      agent
+      -dev
+      -join consul
+
+
+  consul2:
+    build: ./consul
+    links:
+      - consul0:consul
+    command: >
+      agent
+      -dev
+      -join consul
+
+  app:
+    build: ./docker-node-hello
+    links:
+      - consul0:consul
