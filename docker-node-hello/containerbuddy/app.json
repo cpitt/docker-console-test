@@ -1,5 +1,6 @@
 {
   "consul": "consul:8500",
+  "onStart": "/opt/containerbuddy/reload-app.sh",
   "services": [
     {
       "name": "app",
@@ -7,7 +8,20 @@
       "health": "/usr/bin/curl --fail -s http://localhost:8080",
       "poll": 10,
       "ttl": 25,
-      "tags": ["app"]
+      "tags": ["application"]
+    }
+  ],
+  "backends": [
+    {
+      "name": "nginx",
+      "poll": 7,
+      "onChange": "/opt/containerbuddy/reload-app.sh"
+    },
+    {
+      "name": "app",
+      "poll": 5,
+      "onChange": "/opt/containerbuddy/reload-app.sh",
+      "tag": "application"
     }
   ]
 }
